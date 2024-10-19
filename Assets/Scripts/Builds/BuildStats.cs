@@ -1,5 +1,6 @@
 using Parts;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Builds
 {
@@ -129,6 +130,52 @@ namespace Builds
     public int Integrity()
     {
       return build.@core == null ? 0 : build.@core.integrity;
+    }
+
+    public int MaxRange()
+    {
+      List<int> maxRanges = new();
+
+      if (build.@targetingSystem != null)
+      {
+        maxRanges.Add(build.@targetingSystem.maxRange);
+      }
+      foreach (var weapon in build.weapons)
+      {
+        maxRanges.Add(weapon.maxRange);
+      }
+
+      return maxRanges.Count == 0 ? 0 : maxRanges.Min();
+    }
+
+    public int Battery()
+    {
+      return build.@generator == null ? 0 : build.@generator.battery;
+    }
+
+    public int Recharge()
+    {
+      return build.@generator == null ? 0 : build.@generator.recharge;
+    }
+
+    public int HeatCapacity()
+    {
+      return build.@radiator == null ? 0 : build.@radiator.heatCapacity;
+    }
+
+    public int Ventilation()
+    {
+      return build.@radiator == null ? 0 : build.@radiator.ventilation;
+    }
+
+    public int Overload()
+    {
+      return build.@radiator == null ? 0 : build.@radiator.overload;
+    }
+
+    public int Evasion()
+    {
+      return build.@booster == null ? 0 : build.@booster.evasion;
     }
 
     public int AvailableHardpoints()
@@ -414,13 +461,6 @@ namespace Builds
         errors.Add("Right arm limit exceeded by " + (-remaining).ToString());
         return (Status.Error, errors);
       }
-
-      return (Status.Ok, errors);
-    }
-
-    public (Status BuildStatus, List<string> Errors) BuildCheck()
-    {
-      List<string> errors = new();
 
       return (Status.Ok, errors);
     }

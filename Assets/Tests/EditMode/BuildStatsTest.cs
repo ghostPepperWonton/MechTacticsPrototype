@@ -118,6 +118,302 @@ public class BuildStatsTest
   }
   #endregion
 
+  #region Armor
+  [Test]
+  public void BuildStats_Armor_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Armor());
+  }
+
+  [Test]
+  public void BuildStats_Armor_IncludesOnlyDraftedParts()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@base = ScriptableObject.CreateInstance<Base>();
+    build.@base.armor = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Armor());
+  }
+
+  [Test]
+  public void BuildStats_Armor_SumsAllArmorForFullBuild()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@base = ScriptableObject.CreateInstance<Base>();
+    build.@base.armor = 1;
+
+    build.@core = ScriptableObject.CreateInstance<Core>();
+    build.@core.armor = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(2, buildStats.Armor());
+  }
+  #endregion
+
+  #region Mobility
+  [Test]
+  public void BuildStats_Mobility_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Mobility());
+  }
+
+  [Test]
+  public void BuildStats_Mobility_UsesBaseMobility()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@base = ScriptableObject.CreateInstance<Base>();
+    build.@base.mobility = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Mobility());
+  }
+  #endregion
+
+  #region Speed
+  [Test]
+  public void BuildStats_Speed_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Speed());
+  }
+
+  [Test]
+  public void BuildStats_Speed_UsesBaseSpeed()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@base = ScriptableObject.CreateInstance<Base>();
+    build.@base.speed = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Speed());
+  }
+  #endregion
+
+  #region Integrity
+  [Test]
+  public void BuildStats_Integrity_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Integrity());
+  }
+
+  [Test]
+  public void BuildStats_Integrity_UsesCoreIntegrity()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@core = ScriptableObject.CreateInstance<Core>();
+    build.@core.integrity = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Integrity());
+  }
+  #endregion
+
+  #region MaxRange
+  [Test]
+  public void BuildStats_MaxRange_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.MaxRange());
+  }
+
+  [Test]
+  public void BuildStats_MaxRange_IncludesOnlyDraftedParts()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@targetingSystem = ScriptableObject.CreateInstance<TargetingSystem>();
+    build.@targetingSystem.maxRange = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.MaxRange());
+  }
+
+  [Test]
+  public void BuildStats_MaxRange_UsesLowestMaxRangeForFullBuild()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@targetingSystem = ScriptableObject.CreateInstance<TargetingSystem>();
+    build.@targetingSystem.maxRange = 2;
+
+    build.weapons.Add(ScriptableObject.CreateInstance<Weapon>());
+    build.weapons[0].maxRange = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.MaxRange());
+  }
+  #endregion
+
+  #region Battery
+  [Test]
+  public void BuildStats_Battery_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Battery());
+  }
+
+  [Test]
+  public void BuildStats_Battery_UsesGeneratorBattery()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@generator = ScriptableObject.CreateInstance<Generator>();
+    build.@generator.battery = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Battery());
+  }
+  #endregion
+
+  #region Recharge
+  [Test]
+  public void BuildStats_Recharge_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Recharge());
+  }
+
+  [Test]
+  public void BuildStats_Recharge_UsesGeneratorRecharge()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@generator = ScriptableObject.CreateInstance<Generator>();
+    build.@generator.recharge = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Recharge());
+  }
+  #endregion
+
+  #region HeatCapacity
+  [Test]
+  public void BuildStats_HeatCapacity_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.HeatCapacity());
+  }
+
+  [Test]
+  public void BuildStats_HeatCapacity_UsesRadiatorHeatCapacity()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@radiator = ScriptableObject.CreateInstance<Radiator>();
+    build.@radiator.heatCapacity = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.HeatCapacity());
+  }
+  #endregion
+
+  #region Ventilation
+  [Test]
+  public void BuildStats_Ventilation_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Ventilation());
+  }
+
+  [Test]
+  public void BuildStats_Ventilation_UsesRadiatorVentilation()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@radiator = ScriptableObject.CreateInstance<Radiator>();
+    build.@radiator.ventilation = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Ventilation());
+  }
+  #endregion
+
+  #region Overload
+  [Test]
+  public void BuildStats_Overload_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Overload());
+  }
+
+  [Test]
+  public void BuildStats_Overload_UsesRadiatorOverload()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@radiator = ScriptableObject.CreateInstance<Radiator>();
+    build.@radiator.overload = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Overload());
+  }
+  #endregion
+
+  #region Evasion
+  [Test]
+  public void BuildStats_Evasion_ZeroWhenEmpty()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(0, buildStats.Evasion());
+  }
+
+  [Test]
+  public void BuildStats_Evasion_UsesBoosterEvasion()
+  {
+    Build build = ScriptableObject.CreateInstance<Build>();
+
+    build.@booster = ScriptableObject.CreateInstance<Booster>();
+    build.@booster.evasion = 1;
+
+    BuildStats buildStats = new(build);
+
+    Assert.AreEqual(1, buildStats.Evasion());
+  }
+  #endregion
+
   #region AvailableHardpoints
   [Test]
   public void BuildStats_AvailableHardpoints_ZeroWhenEmpty()
