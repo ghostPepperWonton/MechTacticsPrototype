@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a61ea538622cc24c8f3645d457606c2, type: 3}
+  m_Name: TestGenerator
+  m_EditorClassIdentifier: 
+  id: GE-00
+  displayName: TestGenerator
+  manufacturer: Asdf Inc
+  cost: 5
+  partType: 4
+  battery: 5
+  recharge: 5
