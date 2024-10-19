@@ -18,6 +18,7 @@ namespace Parts
     public int weight;
     public int limit;
     public BaseType baseType;
+    public int armor;
     public int mobility;
     public int speed;
   }

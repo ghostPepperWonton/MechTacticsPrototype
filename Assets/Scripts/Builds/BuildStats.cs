@@ -100,6 +100,37 @@ namespace Builds
       return weight;
     }
 
+    public int Armor()
+    {
+      int armor = 0;
+
+      if (build.@base != null)
+      {
+        armor += build.@base.armor;
+      }
+      if (build.@core != null)
+      {
+        armor += build.@core.armor;
+      }
+
+      return armor;
+    }
+
+    public int Mobility()
+    {
+      return build.@base == null ? 0 : build.@base.mobility;
+    }
+
+    public int Speed()
+    {
+      return build.@base == null ? 0 : build.@base.speed;
+    }
+
+    public int Integrity()
+    {
+      return build.@core == null ? 0 : build.@core.integrity;
+    }
+
     public int AvailableHardpoints()
     {
       if (build.@core == null)

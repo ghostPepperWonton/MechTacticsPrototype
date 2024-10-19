@@ -7,8 +7,8 @@ namespace Parts
   {
     public int weight;
     public int limit;
-    public int integrity;
     public int armor;
+    public int integrity;
     public int hardpoints;
   }
 }
